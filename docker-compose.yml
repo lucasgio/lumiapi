@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: api
+    restart: unless-stopped
+    build:
+      args:
+        - PORT=${PORT}
+      target: dev
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "${PORT}:${PORT}"
+    depends_on:
+      - redis-dev
+    volumes:
+      - .:/api
