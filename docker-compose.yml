@@ -7,10 +7,8 @@ services:
         - PORT=${PORT}
       target: dev
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - "${PORT}:${PORT}"
-    depends_on:
-      - redis-dev
     volumes:
       - .:/api
