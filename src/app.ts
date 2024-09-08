@@ -1,6 +1,5 @@
-import dotenv from 'dotenv'
 import { Server } from './server'
-dotenv.config()
 
+// Create a new instance of the Server class
 const server = new Server()
 server.startServer()
