@@ -23,8 +23,10 @@ export class Server {
   }
 
   public startServer() {
-    this._app.listen(this._port, () => {
-      console.log(`Server running on port ${this._port}`)
-    })
+    if (process.env.NODE_ENV === 'development') {
+      this._app.listen(this._port, () => {
+        console.log(`Server running on port ${this._port}`)
+      })
+    }
   }
 }
