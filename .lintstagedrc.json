@@ -1,5 +1,11 @@
 {
-  "src/**/*.{js,jsx,ts,tsx}": ["eslint", "prettier --write"],
-  "src/**/*.md": ["markdownlint", "prettier --write"],
-  "*.json": ["prettier --write"]
+  "*.ts": [
+    "prettier --write",
+    "eslint"
+  ],
+  "*.html": [
+    "eslint",
+    "prettier --write"
+  ],
+  "*.scss": "prettier --write"
 }

@@ -1,50 +1,54 @@
-import request from 'supertest';
-import { Server } from '../../src/server';
-import { Application } from 'express';
+import request from 'supertest'
+import { Server } from '../../src/server'
+import { app } from '../../src/config/app'
+import { NotFoundError } from '../../src/common/exceptions/NotFoundRequestException'
 
 describe('Server', () => {
-  let server: Server;
-  let app: Application;
-
-  beforeEach(() => {
-    server = new Server();
-    app = server['_app'];
-  });
-
-  it('should initialize with correct port and version', () => {
-    expect(server['_port']).toBeDefined();
-    expect(server['_version_api']).toBeDefined();
-  });
-
-  it('should use the correct routes', () => {
-    const useSpy = jest.spyOn(app, 'use');
-    server.routes();
-    expect(useSpy).toHaveBeenCalledWith(`/api${server['_version_api']}`, expect.anything());
-  });
-
-
-  it('should not start the server if not in development mode', () => {
-    process.env.NODE_ENV = 'production';
-    const listenSpy = jest.spyOn(app, 'listen');
-
-    server.startServer();
-    expect(listenSpy).not.toHaveBeenCalled();
-  });
-});
-
-describe('Routes', () => {
-  let app: Application;
-  let server: Server;
+  let serverInstance: Server
 
   beforeAll(() => {
-    server = new Server();
-    server.middleware(); 
-    server.routes(); 
-    app = server['_app'];
-  });
+    serverInstance = new Server()
+  })
 
-  it('should respond with 200 on the API version route', async () => {
-    const response = await request(app).get(`/api${server['_version_api']}/`);
-    expect(response.status).toBe(200);
-  });
-});
+  describe('Core Functionality', () => {
+    it('should initialize the server with the correct port and version', () => {
+      expect(serverInstance).toBeInstanceOf(Server)
+      expect(serverInstance['_port']).toBe(app.port)
+      expect(serverInstance['_version_api']).toBe(app.version_api)
+    })
+
+    it('should handle a valid route correctly', async () => {
+      const response = await request(serverInstance['_app'])
+        .get(`/api/${app.version_api}/health`) // Replace with an actual valid endpoint
+        .send()
+
+      expect(response.status).toBe(200) // Adjust based on actual behavior
+      expect(response.body).toEqual(expect.any(Object)) // Adjust based on the response
+    })
+  })
+
+  describe('Edge Cases', () => {
+    it('should return 404 for unknown routes', async () => {
+      const response = await request(serverInstance['_app'])
+        .get(`/api/${app.version_api}/non-existing-route`)
+        .send()
+
+      expect(response.status).toBe(404)
+      expect(response.body.errors[0].message).toBe('Route not found')
+    })
+  })
+
+  describe('Error Handling', () => {
+    it('should use errorHandler for handling errors', async () => {
+      // Simulate an error scenario
+      serverInstance['_app'].use((req, res, next) => {
+        next(new NotFoundError())
+      })
+
+      const response = await request(serverInstance['_app']).get('/api/fake-endpoint').send()
+
+      expect(response.status).toBe(404)
+      expect(response.body.errors[0].message).toBe('Route not found')
+    })
+  })
+})

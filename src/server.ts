@@ -1,7 +1,9 @@
-import { Application } from 'express'
+import express, { Application, Request, Response } from 'express'
 import { router } from './routes/routes'
-import express from 'express'
 import { app } from './config/app'
+import { LoggerHelper } from './utils/LoggerHelper'
+import { errorHandler } from './middleware/errorHandler'
+import { NotFoundError } from './common/exceptions/NotFoundRequestException'
 
 export class Server {
   private _app: Application
@@ -11,22 +13,30 @@ export class Server {
   constructor() {
     this._app = express()
     this._port = app.port
-    this._version_api = app.version
+    this._version_api = app.version_api
+    this.initializeServer()
   }
 
-  middleware() {
-    // Put here the middleware functions
+  initializeServer() {
+    this.routes()
+    this.setupMiddlewares()
+    this._app.use(errorHandler)
   }
 
-  routes() {
-    this._app.use(`/api${this._version_api}`, router)
+  private setupMiddlewares() {
+    this._app.use(express.json())
+    this._app.all('*', (req: Request, res: Response, next) => {
+      next(new NotFoundError())
+    })
+  }
+
+  private routes() {
+    this._app.use(`/api/${this._version_api}`, router)
   }
 
   public startServer() {
-    if (process.env.NODE_ENV === 'development') {
-      this._app.listen(this._port, () => {
-        console.log(`Server running on port ${this._port}`)
-      })
-    }
+    this._app.listen(this._port, () => {
+      LoggerHelper.logInfo(`Server running on port: ${this._port}`)
+    })
   }
 }
