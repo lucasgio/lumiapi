@@ -1,0 +1,14 @@
+services:
+  api:
+    container_name: api
+    restart: unless-stopped
+    build:
+      args:
+        - PORT=${PORT}
+      target: dev
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:${PORT}"
+    volumes:
+      - .:/api

@@ -1,5 +1,5 @@
 {
-  "name": "restfull-api",
+  "name": "rest-api",
   "version": "1.0.0",
   "description": "REST API boilerplate with Node.js and TypeScript",
   "main": "dist/app.js",
@@ -12,8 +12,14 @@
     "format": "prettier --write .",
     "prepare": "husky"
   },
+  "bin": {
+    "create-rest-api": "./index.js"
+  },
   "dependencies": {
-    "express": "^4.19.2",
+    "express": "^4.21.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^10.2.2",
+    "path": "^0.12.7",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
