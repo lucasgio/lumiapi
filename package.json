@@ -1,5 +1,5 @@
 {
-  "name": "@gio91/turboapi",
+  "name": "@turboapi/core",
   "version": "1.0.0",
   "description": "REST API boilerplate with Node.js and TypeScript",
   "main": "dist/app.js",
