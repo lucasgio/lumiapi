@@ -13,7 +13,7 @@
     "prepare": "husky"
   },
   "bin": {
-    "create-turboapi": "./index.mjs"
+    "create-turboapi": "./index.js"
   },
   "keywords": [
     "turbo",
@@ -36,9 +36,13 @@
     "configure"
   ],
   "dependencies": {
+    "chalk": "^5.3.0",
     "express": "^4.21.0",
+    "figlet": "^1.7.0",
     "fs-extra": "^11.2.0",
+    "gradient-string": "^2.0.2",
     "inquirer": "^10.2.2",
+    "ora": "^8.1.0",
     "path": "^0.12.7",
     "typescript": "^5.5.4"
   },
