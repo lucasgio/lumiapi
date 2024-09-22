@@ -15,7 +15,7 @@ const templatesPath = path.join(__dirname, 'templates')
 
 // Prompt the developer for project details
 const askQuestions = () => {
-  console.log('\nWelcome to the Rest Api Template Project Installer!\n')
+  console.log('\nWelcome to Turboapi Project Installer!\n')
 
   return inquirer.prompt([
     {
@@ -160,7 +160,7 @@ const modifyPackageJson = (projectPath, projectName) => {
 // Main function to run the script
 const run = async () => {
   console.clear()
-  console.log('Starting the Rest Api Template Project Installer...\n')
+  console.log('Starting the Turboapi Project Installer...\n')
 
   const answers = await askQuestions()
   const { projectName, dockerize } = answers

@@ -1,0 +1,9 @@
+*
+!@turboapi/core
+!@turboapi/core/*
+!index.mjs
+!package.json
+!package-lock.json
+!README.md
+!LICENSE
+!CHANGELOG.md

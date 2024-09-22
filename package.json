@@ -1,5 +1,5 @@
 {
-  "name": "rest-api",
+  "name": "@gio91/turboapi",
   "version": "1.0.0",
   "description": "REST API boilerplate with Node.js and TypeScript",
   "main": "dist/app.js",
@@ -13,8 +13,28 @@
     "prepare": "husky"
   },
   "bin": {
-    "create-rest-api": "./index.js"
+    "create-turboapi": "./index.mjs"
   },
+  "keywords": [
+    "turbo",
+    "api",
+    "boilerplate",
+    "typescript",
+    "node",
+    "express",
+    "rest",
+    "restful",
+    "api",
+    "starter",
+    "template",
+    "project",
+    "generator",
+    "cli",
+    "create",
+    "install",
+    "setup",
+    "configure"
+  ],
   "dependencies": {
     "express": "^4.21.0",
     "fs-extra": "^11.2.0",
