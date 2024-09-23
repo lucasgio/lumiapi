@@ -1,6 +1,6 @@
 {
   "name": "restsnap",
-  "version": "1.0.1",
+  "version": "0.0.3",
   "description": "A microframework for building REST APIs efficiently.",
   "main": "core/index.mjs",
   "bin": {
