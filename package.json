@@ -1,78 +1,43 @@
 {
-  "name": "lumiapi",
+  "name": "restsnap",
   "version": "1.0.1",
-  "description": "REST API boilerplate with Node.js and TypeScript",
-  "main": "dist/app.js",
-  "scripts": {
-    "start": "node dist/app.js",
-    "dev": "ts-node-dev --respawn src/app.ts",
-    "build": "tsc . p",
-    "test": "cross-env NODE_ENV=testing jest --maxWorkers=1",
-    "lint": "eslint . --ext .ts,.tsx",
-    "format": "prettier --write .",
-    "prepare": "husky"
-  },
+  "description": "A microframework for building REST APIs efficiently.",
+  "main": "core/index.mjs",
   "bin": {
-    "create-lumiapi": "./index.js"
-  },
-  "publishConfig": {
-    "access": "public"
+    "restsnap": "core/index.mjs"
   },
   "keywords": [
-    "turbo",
-    "api",
-    "boilerplate",
+    "REST",
+    "API",
+    "Node.js",
+    "CLI",
+    "framework",
+    "restsnap",
+    "zero-dependency",
+    "modular",
     "typescript",
-    "node",
-    "express",
-    "rest",
-    "restful",
-    "api",
-    "starter",
-    "template",
-    "project",
-    "generator",
-    "cli",
-    "create",
-    "install",
-    "setup",
-    "configure"
+    "starter"
   ],
+  "author": "Your Name <youremail@example.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/lucasgio/restsnap#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasgio/restsnap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lucasgio/restsnap/issues"
+  },
   "dependencies": {
-    "chalk": "^5.3.0",
-    "express": "^4.21.0",
-    "figlet": "^1.7.0",
-    "fs-extra": "^11.2.0",
-    "gradient-string": "^2.0.2",
-    "inquirer": "^10.2.2",
-    "ora": "^8.1.0",
-    "path": "^0.12.7",
-    "typescript": "^5.5.4"
+    "chalk": "^5.2.0",
+    "chalk-animation": "^2.0.3",
+    "figlet": "^1.5.2",
+    "fs-extra": "^11.1.0",
+    "gradient-string": "^2.0.1",
+    "inquirer": "^9.2.3",
+    "ora": "^6.1.2"
   },
-  "devDependencies": {
-    "@babel/preset-env": "^7.25.4",
-    "@babel/preset-typescript": "^7.24.7",
-    "@eslint/js": "^9.10.0",
-    "@types/express": "^4.17.21",
-    "@types/jest": "^29.5.12",
-    "@types/node": "^22.5.4",
-    "@types/supertest": "^6.0.2",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.4.5",
-    "eslint": "^9.10.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "globals": "^15.9.0",
-    "husky": "^9.1.5",
-    "jest": "^29.7.0",
-    "lint-staged": "^15.2.10",
-    "prettier": "^3.3.3",
-    "supertest": "^7.0.0",
-    "swagger-ui-express": "^5.0.1",
-    "ts-jest": "^29.2.5",
-    "ts-node-dev": "^2.0.0",
-    "typescript-eslint": "^8.5.0"
-  },
-  "author": "Iosvany Alvarez",
-  "license": "MIT"
+  "engines": {
+    "node": ">=14.0.0"
+  }
 }

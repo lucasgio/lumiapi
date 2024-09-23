@@ -1,9 +1,26 @@
-*
-!@lumiapi/core
-!@lumiapi/core/*
-!index.mjs
-!package.json
-!package-lock.json
-!README.md
-!LICENSE
-!CHANGELOG.md
+# Ignorar carpetas de configuración y desarrollo
+config/
+scripts/
+test/
+docs/
+examples/
+__test__/
+__tests__/
+
+# Ignorar archivos de configuración de herramientas
+.eslint*
+.prettier*
+.jest*
+Dockerfile
+docker-compose.yml
+.env
+*.log
+
+# Ignorar archivos de control de versión y de entorno
+.git
+.gitignore
+.npmignore
+
+# Otros archivos innecesarios
+yarn.lock
+package-lock.json

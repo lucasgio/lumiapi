@@ -1,7 +1,7 @@
 {
-  "name": "rest-api-starter",
+  "name": "restsnap",
   "version": "1.0.0",
-  "description": "Starter template for Node.js project with TypeScript",
+  "description": "A fast and intuitive way to start a REST API project with Node.js, using a modular and zero-dependency approach.",
   "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
@@ -12,11 +12,7 @@
     "format": "prettier --write .",
     "prettier-check": "prettier --check ."
   },
-  "keywords": [
-    "typescript",
-    "node",
-    "starter"
-  ],
+  "keywords": ["typescript", "node", "starter"],
   "author": "Iosvany Alvarez",
   "license": "MIT",
   "dependencies": {

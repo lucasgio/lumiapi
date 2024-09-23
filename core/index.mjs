@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 /* eslint-disable no-undef */
-
 import inquirer from 'inquirer'
 import fs from 'fs-extra'
 import path from 'path'
@@ -11,18 +10,18 @@ import figlet from 'figlet'
 import gradient from 'gradient-string'
 import { exec } from 'child_process'
 
-// Get the directory name in ESM
+// Obtener el directorio actual
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-// Path to templates (docker, etc.)
-const templatesPath = path.join(__dirname, '@lumiapi/core')
+// Ajustar la ruta de plantillas (Verificar la ubicación de tu carpeta core)
+const templatesPath = path.join(__dirname)
 
-// Display the welcome message
+// Mostrar mensaje de bienvenida
 const displayWelcomeMessage = () => {
   console.clear()
   console.log(
-    gradient.pastel.multiline(figlet.textSync('Lumiapi Installer', { horizontalLayout: 'full' }))
+    gradient.pastel.multiline(figlet.textSync('RESTSNAP CLI', { horizontalLayout: 'full' }))
   )
   console.log(
     chalk.blueBright.bold(
@@ -31,14 +30,14 @@ const displayWelcomeMessage = () => {
   )
 }
 
-// Prompt the developer for project details
+// Preguntar los detalles del proyecto
 const askQuestions = () => {
   return inquirer.prompt([
     {
       name: 'projectName',
       type: 'input',
       message: 'What is the name of your project?',
-      default: 'my-lumiapi-project',
+      default: 'my-restsnap-project',
     },
     {
       name: 'dockerize',
@@ -48,7 +47,7 @@ const askQuestions = () => {
   ])
 }
 
-// Select the package manager
+// Seleccionar el administrador de paquetes
 const selectManager = async () => {
   const { whichManagerPackage } = await inquirer.prompt([
     {
@@ -62,7 +61,7 @@ const selectManager = async () => {
   return whichManagerPackage;
 }
 
-// Create project folder structure
+// Crear la estructura de carpetas del proyecto
 const createStructure = async (projectPath, spinner) => {
   try {
     const folders = [
@@ -85,12 +84,6 @@ const createStructure = async (projectPath, spinner) => {
 
     for (const folder of folders) {
       const dirPath = path.join(projectPath, folder)
-      if (fs.existsSync(dirPath)) {
-        console.log(
-          chalk.yellow(`Warning: Directory ${dirPath} already exists. Skipping creation.`)
-        )
-        continue
-      }
       fs.ensureDirSync(dirPath)
     }
 
@@ -98,23 +91,50 @@ const createStructure = async (projectPath, spinner) => {
   } catch (error) {
     spinner.fail('Failed to create project structure.')
     console.error(chalk.red(`Error: ${error.message}`))
-    process.exit(1) // Exit the process on failure
+    process.exit(1)
   }
 }
 
-// Copy template files
+// Copiar los archivos de plantilla
 const copyTemplateFiles = async (projectPath, dockerize, spinner) => {
   try {
+
+  
+    
     if (!fs.existsSync(templatesPath)) {
       throw new Error(`Template path ${templatesPath} not found.`)
     }
 
-    const filesToCopy = [
-      { source: 'Dockerfile', dest: 'Dockerfile' },
-      { source: 'docker-compose.yml', dest: 'docker-compose.yml' },
+    const filesToCopyWithoutDocker = [
       { source: '.gitignore', dest: '.gitignore' },
       { source: 'tsconfig.json', dest: 'tsconfig.json' },
+      { source: 'package_template.json', dest: 'package.json' },
+      { source: 'README.md', dest: 'README.md' },
+      { source: '.env.example', dest: '.env.example' },
+      { source: 'jest.config.js', dest: 'jest.config.js' },
+      { source: 'src/app.ts', dest: 'src/app.ts' },
+      { source: 'src/server.ts', dest: 'src/server.ts' },
+      { source: 'src/common/exceptions/BadRequestException.ts', dest: 'src/common/exceptions/BadRequestException.ts' },
+      { source: 'src/common/exceptions/ForbiddenRequestException.ts', dest: 'src/common/exceptions/ForbiddenRequestException.ts' },
+      { source: 'src/common/exceptions/NotFoundRequestException.ts', dest: 'src/common/exceptions/NotFoundRequestException.ts' },
+      { source: 'src/common/exceptions/UnauthorizedRequestException.ts', dest: 'src/common/exceptions/UnauthorizedRequestException.ts' },
+      { source: 'src/common/exceptions/README.md', dest: 'src/common/exceptions/README.md' },
+      { source: 'src/config/app.ts', dest: 'src/config/app.ts' },
+      { source: 'src/middleware/errorHandler.ts', dest: 'src/middleware/errorHandler.ts' },
+      { source: 'src/routes/routes.ts', dest: 'src/routes/routes.ts' },
+      { source: 'src/utils/CustomException.ts', dest: 'src/utils/CustomException.ts' },
+      { source: 'src/utils/LoggerHelper.ts', dest: 'src/utils/LoggerHelper.ts' },
+      { source: '.eslintrc.js', dest: '.eslintrc.js' },
+      { source: 'tsconfig.json', dest: 'tsconfig.json' },
+      { source: '.gitignore', dest: '.gitignore' },
+      { source: 'package_template.json', dest: 'package.json' },
+      { source: '.prettierrc.json', dest: '.prettierrc.json' }, 
     ]
+
+    const filesToCopy = dockerize ? filesToCopyWithoutDocker.concat({ 
+      source: 'Dockerfile', dest: 'Dockerfile',
+      source: 'docker-compose.yml', dest: 'docker-compose.yml',
+    }) : filesToCopyWithoutDocker
 
     for (const file of filesToCopy) {
       const sourcePath = path.join(templatesPath, file.source)
@@ -126,27 +146,22 @@ const copyTemplateFiles = async (projectPath, dockerize, spinner) => {
       }
     }
 
-    spinner.succeed('Core of lumiapi copied successfully!')
+    spinner.succeed('Core of restsnap copied successfully!')
   } catch (error) {
-    spinner.fail('Failed to copy core lumiapi files.')
+    spinner.fail('Failed to copy core restsnap files.')
     console.error(chalk.red(`Error: ${error.message}`))
     process.exit(1)
   }
 }
 
-// Modify package.json
+// Modificar el package.json
 const modifyPackageJson = async (projectPath, projectName, spinner) => {
   try {
-    const packageJsonPath = path.join(templatesPath, 'package.json')
-    if (!fs.existsSync(packageJsonPath)) {
-      throw new Error(`Core lumiapi package.json not found at ${packageJsonPath}`)
-    }
-
+    const packageJsonPath = path.join(projectPath, 'package.json')
     const packageJson = fs.readJsonSync(packageJsonPath)
     packageJson.name = projectName
 
-    const outputPath = path.join(projectPath, 'package.json')
-    fs.writeJsonSync(outputPath, packageJson, { spaces: 2 })
+    fs.writeJsonSync(packageJsonPath, packageJson, { spaces: 2 })
     spinner.succeed('package.json configured successfully!')
   } catch (error) {
     spinner.fail('Failed to modify package.json.')
@@ -155,7 +170,7 @@ const modifyPackageJson = async (projectPath, projectName, spinner) => {
   }
 }
 
-// Install dependencies
+// Instalar las dependencias
 const installDependencies = (projectPath, spinner, managerDependency) => {
   return new Promise((resolve, reject) => {
     exec(`${managerDependency} install`, { cwd: projectPath }, (error, stdout, stderr) => {
@@ -174,7 +189,7 @@ const installDependencies = (projectPath, spinner, managerDependency) => {
   })
 }
 
-// Main function to run the script
+// Ejecutar el script
 const run = async () => {
   try {
     displayWelcomeMessage()
@@ -204,22 +219,25 @@ const run = async () => {
     spinner.start(chalk.blueBright('Installing dependencies...'))
     await installDependencies(projectPath, spinner, managerDependency)
 
-    console.log(chalk.greenBright(`\nProject "${projectName}" created successfully!\n`))
-    console.log(`To start the project, run the following commands:\n`)
-    console.log(`   cd ${projectName}`)
     if (dockerize) {
+      console.log(chalk.greenBright(`\nProject "${projectName}" created successfully!\n`))
+      console.log(`To start the project, run the following commands:\n`)
+      console.log(`   cd ${projectName}`)
       console.log(`   cp .env.example .env`)
       console.log(`   docker-compose up -d`)
+      console.log(chalk.bold.green('\nHappy coding! 🚀\n'))
     } else {
+      console.log(chalk.greenBright(`\nProject "${projectName}" created successfully!\n`))
+      console.log(`To start the project, run the following commands:\n`)
+      console.log(`   cd ${projectName}`)
       console.log(`   cp .env.example .env`)
       console.log(`   ${managerDependency} run dev`)
+      console.log(chalk.bold.green('\nHappy coding! 🚀\n'))
     }
-    console.log(chalk.bold.green('\nHappy coding! 🚀\n'))
   } catch (error) {
     console.error(chalk.red(`Fatal error: ${error.message}`))
     process.exit(1)
   }
 }
 
-// Execute the script
 run()

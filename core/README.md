@@ -1,12 +1,12 @@
-# ![restsnap](https://res.cloudinary.com/dujvwu2jm/image/upload/v1727053387/banner_i24jh2.png)
+# ![Restsnap](https://res.cloudinary.com/dujvwu2jm/image/upload/v1727095838/Captura_de_pantalla_2024-09-23_a_la_s_9.50.18_a._m._rpomcy.png)
 
-# restsnap
+# Restsnap
 
 **A fast way to start your Node.js project with zero dependencies and a modular approach.**
 
 ## Overview
 
-restsnap is a lightweight and intuitive framework designed to make building RESTful APIs in Node.js easier, faster, and more scalable. With a core system that provides the essentials and a modular architecture, restsnap allows you to add only the functionalities you need, without the bloat of unnecessary dependencies.
+Restsnap is a lightweight and intuitive framework designed to make building RESTful APIs in Node.js easier, faster, and more scalable. With a core system that provides the essentials and a modular architecture, restsnap allows you to add only the functionalities you need, without the bloat of unnecessary dependencies.
 
 ### Key Features
 - **Zero Dependency:** Start your project with no external dependencies, ensuring a clean, fast, and lightweight setup.
@@ -14,9 +14,9 @@ restsnap is a lightweight and intuitive framework designed to make building REST
 - **Intuitive & Easy to Use:** restsnap is designed to be developer-friendly, with a clear structure that allows you to focus on building your API.
 - **Scalable:** Whether you’re building a simple prototype or a complex application, restsnap adapts to your needs.
 
-## Why restsnap?
+## Why Restsnap?
 
-restsnap is the perfect starting point for developers who want to build a REST API with Node.js efficiently. It’s built with the philosophy of simplicity and flexibility, providing the foundation you need while allowing you to customize and extend as your project grows.
+Restsnap is the perfect starting point for developers who want to build a REST API with Node.js efficiently. It’s built with the philosophy of simplicity and flexibility, providing the foundation you need while allowing you to customize and extend as your project grows.
 
 ## Getting Started
 
