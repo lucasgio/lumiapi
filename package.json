@@ -1,5 +1,5 @@
 {
-  "name": "@turboapi/core",
+  "name": "lumiapi",
   "version": "1.0.0",
   "description": "REST API boilerplate with Node.js and TypeScript",
   "main": "dist/app.js",
@@ -13,7 +13,10 @@
     "prepare": "husky"
   },
   "bin": {
-    "create-turboapi": "./index.js"
+    "create-lumiapi": "./index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "turbo",

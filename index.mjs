@@ -16,13 +16,13 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // Path to templates (docker, etc.)
-const templatesPath = path.join(__dirname, '@turboapi/core')
+const templatesPath = path.join(__dirname, '@lumiapi/core')
 
 // Display the welcome message
 const displayWelcomeMessage = () => {
   console.clear()
   console.log(
-    gradient.pastel.multiline(figlet.textSync('TurboAPI Installer', { horizontalLayout: 'full' }))
+    gradient.pastel.multiline(figlet.textSync('Lumiapi Installer', { horizontalLayout: 'full' }))
   )
   console.log(
     chalk.blueBright.bold(
@@ -38,7 +38,7 @@ const askQuestions = () => {
       name: 'projectName',
       type: 'input',
       message: 'What is the name of your project?',
-      default: 'my-turboapi-project',
+      default: 'my-lumiapi-project',
     },
     {
       name: 'dockerize',
@@ -126,9 +126,9 @@ const copyTemplateFiles = async (projectPath, dockerize, spinner) => {
       }
     }
 
-    spinner.succeed('Core of turboapi copied successfully!')
+    spinner.succeed('Core of lumiapi copied successfully!')
   } catch (error) {
-    spinner.fail('Failed to copy core turboapi files.')
+    spinner.fail('Failed to copy core lumiapi files.')
     console.error(chalk.red(`Error: ${error.message}`))
     process.exit(1)
   }
@@ -139,7 +139,7 @@ const modifyPackageJson = async (projectPath, projectName, spinner) => {
   try {
     const packageJsonPath = path.join(templatesPath, 'package.json')
     if (!fs.existsSync(packageJsonPath)) {
-      throw new Error(`Core turboapi package.json not found at ${packageJsonPath}`)
+      throw new Error(`Core lumiapi package.json not found at ${packageJsonPath}`)
     }
 
     const packageJson = fs.readJsonSync(packageJsonPath)

@@ -1,6 +1,6 @@
 *
-!@turboapi/core
-!@turboapi/core/*
+!@lumiapi/core
+!@lumiapi/core/*
 !index.mjs
 !package.json
 !package-lock.json
