@@ -1,11 +1,5 @@
 {
-  "*.ts": [
-    "prettier --write",
-    "eslint"
-  ],
-  "*.html": [
-    "eslint",
-    "prettier --write"
-  ],
-  "*.scss": "prettier --write"
+  "src/**/*.{js,jsx,ts,tsx}": ["eslint", "prettier --write", "git add"],
+  "src/**/*.md": ["markdownlint", "prettier --write", "git add"],
+  "*.json": ["prettier --write", "git add"]
 }
