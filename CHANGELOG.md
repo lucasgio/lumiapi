@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 
+### Updated
+- Updated `README.md` with more detailed information.
+
 
 ### Added
 ### All these change was for the development of the project.
